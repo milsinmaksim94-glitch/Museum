@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- отступы -->
+    <dimen name="padding_screen">16dp</dimen>
+    <dimen name="margin_tiny">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_huge">40dp</dimen>
+
+    <!-- размеры текста -->
+    <dimen name="text_header">26sp</dimen>
+    <dimen name="text_title">20sp</dimen>
+    <dimen name="text_subtitle">16sp</dimen>
+    <dimen name="text_body">14sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+
+    <!-- карточки -->
+    <dimen name="card_corner">10dp</dimen>
+    <dimen name="card_elevation">3dp</dimen>
+    <dimen name="card_padding">12dp</dimen>
+
+    <!-- прочее -->
+    <dimen name="logo_size">96dp</dimen>
+    <dimen name="icon_size">48dp</dimen>
+    <dimen name="icon_small">24dp</dimen>
+    <dimen name="button_height">52dp</dimen>
+    <dimen name="counter_button">44dp</dimen>
+    <dimen name="counter_text_width">40dp</dimen>
+    <dimen name="form_max_width">420dp</dimen>
+    <dimen name="description_min_lines_height">96dp</dimen>
+</resources>
