@@ -30,7 +30,7 @@ class HallAdapter(
     override fun onBindViewHolder(holder: HallViewHolder, position: Int) {
         val hall = items[position]
         holder.tvName.text = hall.name
-        holder.tvFloor.text = holder.itemView.context.getString(R.string.format_floor, hall.floor)
+        holder.tvFloor.text = holder.itemView.context.getString(R.string.format_place_floor, hall.placeName, hall.floor)
         holder.tvDescription.text = hall.description
         holder.btnDelete.setOnClickListener { onDelete(hall) }
     }

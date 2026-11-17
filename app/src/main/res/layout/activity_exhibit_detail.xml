@@ -8,68 +8,84 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_screen">
+        android:paddingBottom="@dimen/margin_huge">
+
+        <!-- большое фото экспоната во всю ширину экрана -->
+        <ImageView
+            android:id="@+id/ivPhoto"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/photo_detail_height"
+            android:contentDescription="@string/title_exhibit"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- инвентарный номер, как на музейной табличке -->
+        <TextView
+            android:id="@+id/tvInvNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_screen"
+            android:layout_marginTop="@dimen/padding_screen"
+            android:background="@drawable/chip_background"
+            android:paddingStart="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_tiny"
+            android:paddingEnd="@dimen/margin_small"
+            android:paddingBottom="@dimen/margin_tiny"
+            android:textColor="@color/on_accent"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivPhoto" />
 
         <TextView
             android:id="@+id/tvTitle"
             style="@style/HeaderText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_screen"
+            android:layout_marginTop="@dimen/margin_small"
             app:layout_constraintEnd_toStartOf="@id/btnFavorite"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tvInvNumber" />
 
         <!-- сердечко: добавить/убрать из избранного -->
         <ImageButton
             android:id="@+id/btnFavorite"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
+            android:layout_marginEnd="@dimen/margin_small"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/title_favorites"
             android:src="@drawable/ic_favorite"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/tvTitle" />
 
         <TextView
             android:id="@+id/tvAuthor"
             style="@style/SubtitleText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginStart="@dimen/padding_screen"
+            android:layout_marginEnd="@dimen/padding_screen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
-
-        <TextView
-            android:id="@+id/tvYear"
-            style="@style/BodyText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAuthor" />
-
-        <TextView
-            android:id="@+id/tvHall"
-            style="@style/BodyText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvYear" />
 
         <RatingBar
             android:id="@+id/ratingAverage"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_screen"
             android:layout_marginTop="@dimen/margin_small"
             android:isIndicator="true"
             android:numStars="5"
             android:progressTint="@color/accent"
             android:stepSize="0.1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvHall" />
+            app:layout_constraintTop_toBottomOf="@id/tvAuthor" />
 
         <TextView
             android:id="@+id/tvRatingValue"
@@ -81,101 +97,189 @@
             app:layout_constraintStart_toEndOf="@id/ratingAverage"
             app:layout_constraintTop_toTopOf="@id/ratingAverage" />
 
+        <!-- "паспорт экспоната" -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPassport"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_screen"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/padding_screen"
+            app:cardBackgroundColor="@color/primary_soft"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ratingAverage">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/card_padding">
+
+                <TextView
+                    android:id="@+id/tvYear"
+                    style="@style/BodyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/tvMaterial"
+                    style="@style/BodyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/tvHall"
+                    style="@style/BodyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    android:drawablePadding="@dimen/margin_tiny"
+                    android:textColor="@color/text_primary"
+                    app:drawableStartCompat="@drawable/ic_place_small" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <TextView
             android:id="@+id/tvDescription"
             style="@style/SubtitleText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_screen"
             android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/padding_screen"
+            android:lineSpacingExtra="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ratingAverage" />
+            app:layout_constraintTop_toBottomOf="@id/cardPassport" />
 
-        <!-- ===== блок добавления отзыва ===== -->
-        <TextView
-            android:id="@+id/tvYourReview"
-            style="@style/TitleText"
+        <!-- блок добавления отзыва -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardReview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_screen"
             android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/label_your_review"
+            android:layout_marginEnd="@dimen/padding_screen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+            app:layout_constraintTop_toBottomOf="@id/tvDescription">
 
-        <TextView
-            android:id="@+id/tvRateLabel"
-            style="@style/BodyText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:text="@string/label_rating"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvYourReview" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/card_padding">
 
-        <!-- оценка от 1 до 5 ползунком -->
-        <SeekBar
-            android:id="@+id/seekRating"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:max="4"
-            android:progress="4"
-            app:layout_constraintBottom_toBottomOf="@id/tvRateLabel"
-            app:layout_constraintEnd_toStartOf="@id/tvSeekValue"
-            app:layout_constraintStart_toEndOf="@id/tvRateLabel"
-            app:layout_constraintTop_toTopOf="@id/tvRateLabel" />
+                <TextView
+                    android:id="@+id/tvYourReview"
+                    style="@style/TitleText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_your_review"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvSeekValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/accent_dark"
-            android:textSize="@dimen/text_subtitle"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/tvRateLabel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvRateLabel" />
+                <TextView
+                    android:id="@+id/tvRateLabel"
+                    style="@style/BodyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:text="@string/label_rating"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvYourReview" />
 
-        <EditText
-            android:id="@+id/etComment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:hint="@string/hint_comment"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine|textCapSentences"
-            android:maxLength="500"
-            app:layout_constraintEnd_toStartOf="@id/btnSend"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvRateLabel" />
+                <!-- оценка от 1 до 5 ползунком -->
+                <SeekBar
+                    android:id="@+id/seekRating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:max="4"
+                    android:progress="4"
+                    android:progressTint="@color/accent"
+                    android:thumbTint="@color/accent"
+                    app:layout_constraintBottom_toBottomOf="@id/tvRateLabel"
+                    app:layout_constraintEnd_toStartOf="@id/tvSeekValue"
+                    app:layout_constraintStart_toEndOf="@id/tvRateLabel"
+                    app:layout_constraintTop_toTopOf="@id/tvRateLabel" />
 
-        <Button
-            android:id="@+id/btnSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:text="@string/btn_send"
-            app:layout_constraintBottom_toBottomOf="@id/etComment"
-            app:layout_constraintEnd_toEndOf="parent" />
+                <TextView
+                    android:id="@+id/tvSeekValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/margin_tiny"
+                    android:textColor="@color/accent_dark"
+                    android:textSize="@dimen/text_title"
+                    android:textStyle="bold"
+                    app:drawableEndCompat="@drawable/ic_star_accent"
+                    app:layout_constraintBottom_toBottomOf="@id/tvRateLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvRateLabel" />
 
-        <!-- ===== список отзывов ===== -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilComment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:hint="@string/hint_comment"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="500"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRateLabel">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:importantForAutofill="no"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:maxLength="500"
+                        android:minLines="2" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSend"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/btn_send_review"
+                    app:icon="@drawable/ic_send"
+                    app:iconGravity="textStart"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tilComment" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- список отзывов -->
         <TextView
             android:id="@+id/tvCommentsTitle"
             style="@style/TitleText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_screen"
             android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/padding_screen"
             android:text="@string/label_comments"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etComment" />
+            app:layout_constraintTop_toBottomOf="@id/cardReview" />
 
         <TextView
             android:id="@+id/tvNoComments"
             style="@style/BodyText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_screen"
             android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/padding_screen"
             android:text="@string/no_comments"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -186,6 +290,8 @@
             android:id="@+id/rvComments"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_screen"
+            android:layout_marginEnd="@dimen/padding_screen"
             android:nestedScrollingEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

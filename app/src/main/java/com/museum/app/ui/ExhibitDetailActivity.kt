@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.SeekBar
 import android.widget.TextView
@@ -21,7 +22,9 @@ import com.museum.app.R
 import com.museum.app.adapters.CommentAdapter
 import com.museum.app.data.Comment
 import com.museum.app.data.MuseumRepository
+import com.museum.app.utils.ImageHelper
 import com.museum.app.utils.SessionManager
+import com.museum.app.utils.FormUtils
 import kotlinx.coroutines.launch
 
 // Экран подробностей экспоната: описание, избранное, оценка и отзывы
@@ -115,7 +118,10 @@ class ExhibitDetailActivity : AppCompatActivity() {
             tvTitle.text = exhibit.title
             tvAuthor.text = getString(R.string.format_author, exhibit.author)
             tvYear.text = getString(R.string.format_year, exhibit.year)
-            tvHall.text = getString(R.string.format_hall, exhibit.hallName)
+            tvHall.text = getString(R.string.format_hall_place, exhibit.hallName, exhibit.placeName)
+            findViewById<TextView>(R.id.tvMaterial).text = getString(R.string.format_material, exhibit.material)
+            findViewById<TextView>(R.id.tvInvNumber).text = getString(R.string.format_inv_number, exhibit.invNumber)
+            ImageHelper.show(findViewById<ImageView>(R.id.ivPhoto), exhibit.image, R.drawable.ic_museum_large)
             tvDescription.text = exhibit.description
 
             ratingAverage.rating = exhibit.rating
@@ -162,7 +168,7 @@ class ExhibitDetailActivity : AppCompatActivity() {
     private fun sendComment() {
         val text = etComment.text.toString().trim()
         if (text.isEmpty()) {
-            etComment.error = getString(R.string.error_empty_comment)
+            FormUtils.showError(etComment, getString(R.string.error_empty_comment))
             return
         }
         val rating = seekRating.progress + 1

@@ -6,10 +6,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.ImageButton
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.museum.app.R
 import com.museum.app.data.MuseumRepository
@@ -18,17 +19,15 @@ import com.museum.app.utils.SessionManager
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-// Запись на экскурсию: выбор даты, времени, кол-ва человек.
-// Стоимость считается сразу при любом изменении
+// Запись на экскурсию: выбор даты, сеанса (времени), кол-ва человек.
+// Стоимость считается сразу при любом изменении.
+// У каждой экскурсии есть сеансы и максимум людей в группе - как на настоящем сайте музея
 class BookingActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_TOUR_ID = "tour_id"
 
         const val AUDIO_GUIDE_PRICE = 200 // аудиогид на одного человека
-        const val OPEN_HOUR = 10 // музей открывается в 10
-        const val CLOSE_HOUR = 18 // последняя экскурсия начинается до 18
-        const val MAX_PEOPLE = 20 // больше в группу не берут
     }
 
     private lateinit var repository: MuseumRepository
@@ -40,6 +39,7 @@ class BookingActivity : AppCompatActivity() {
     private lateinit var tvChildren: TextView
     private lateinit var cbAudioGuide: CheckBox
     private lateinit var tvTotal: TextView
+    private lateinit var tvFreeSeats: TextView
 
     private var tour: Tour? = null
     private var tourId: Long = -1
@@ -68,6 +68,7 @@ class BookingActivity : AppCompatActivity() {
         tvChildren = findViewById(R.id.tvChildren)
         cbAudioGuide = findViewById(R.id.cbAudioGuide)
         tvTotal = findViewById(R.id.tvTotal)
+        tvFreeSeats = findViewById(R.id.tvFreeSeats)
 
         // восстанавливаем то, что было выбрано до поворота экрана
         if (savedInstanceState != null) {
@@ -83,21 +84,19 @@ class BookingActivity : AppCompatActivity() {
         btnDate.setOnClickListener { showDatePicker() }
         btnTime.setOnClickListener { showTimePicker() }
 
-        findViewById<ImageButton>(R.id.btnAdultsPlus).setOnClickListener {
-            if (adults + children < MAX_PEOPLE) adults++
-            else Toast.makeText(this, getString(R.string.error_max_people, MAX_PEOPLE), Toast.LENGTH_SHORT).show()
+        findViewById<View>(R.id.btnAdultsPlus).setOnClickListener {
+            if (canAddPerson()) adults++
             updateUi()
         }
-        findViewById<ImageButton>(R.id.btnAdultsMinus).setOnClickListener {
+        findViewById<View>(R.id.btnAdultsMinus).setOnClickListener {
             if (adults > 0) adults--
             updateUi()
         }
-        findViewById<ImageButton>(R.id.btnChildrenPlus).setOnClickListener {
-            if (adults + children < MAX_PEOPLE) children++
-            else Toast.makeText(this, getString(R.string.error_max_people, MAX_PEOPLE), Toast.LENGTH_SHORT).show()
+        findViewById<View>(R.id.btnChildrenPlus).setOnClickListener {
+            if (canAddPerson()) children++
             updateUi()
         }
-        findViewById<ImageButton>(R.id.btnChildrenMinus).setOnClickListener {
+        findViewById<View>(R.id.btnChildrenMinus).setOnClickListener {
             if (children > 0) children--
             updateUi()
         }
@@ -130,10 +129,24 @@ class BookingActivity : AppCompatActivity() {
                 return@launch
             }
             findViewById<TextView>(R.id.tvTourTitle).text = t.title
-            findViewById<TextView>(R.id.tvTourInfo).text =
-                getString(R.string.format_tour_full_info, t.hallName, t.duration, t.price)
+            findViewById<TextView>(R.id.tvTourInfo).text = getString(
+                R.string.format_tour_full_info, t.placeName, t.hallName, t.guideName, t.duration, t.price, t.maxPeople
+            )
+            // вместо часов работы показываем сеансы этой экскурсии
+            findViewById<TextView>(R.id.tvWorkHours).text =
+                getString(R.string.format_sessions, t.sessionList().joinToString(", "))
             updateUi()
         }
+    }
+
+    // в группе не больше maxPeople человек
+    private fun canAddPerson(): Boolean {
+        val max = tour?.maxPeople ?: 0
+        if (adults + children >= max) {
+            Toast.makeText(this, getString(R.string.error_max_people, max), Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
 
     // считаем стоимость: взрослый полная цена, детский в 2 раза дешевле
@@ -158,6 +171,28 @@ class BookingActivity : AppCompatActivity() {
         if (hour != -1) {
             btnTime.text = formatTime()
         }
+        updateFreeSeats()
+    }
+
+    // показываем, сколько мест осталось на выбранный сеанс
+    private fun updateFreeSeats() {
+        val t = tour
+        if (t == null || day == -1 || hour == -1) {
+            tvFreeSeats.text = getString(R.string.choose_session_hint)
+            tvFreeSeats.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
+            return
+        }
+        lifecycleScope.launch {
+            val booked = repository.getBookedPeople(t.id, formatDate(), formatTime())
+            val free = t.maxPeople - booked
+            if (free > 0) {
+                tvFreeSeats.text = getString(R.string.format_free_seats, free, t.maxPeople)
+                tvFreeSeats.setTextColor(ContextCompat.getColor(this@BookingActivity, R.color.status_confirmed))
+            } else {
+                tvFreeSeats.text = getString(R.string.no_free_seats)
+                tvFreeSeats.setTextColor(ContextCompat.getColor(this@BookingActivity, R.color.status_cancelled))
+            }
+        }
     }
 
     private fun showDatePicker() {
@@ -179,13 +214,27 @@ class BookingActivity : AppCompatActivity() {
     }
 
     private fun showTimePicker() {
-        val h = if (hour != -1) hour else OPEN_HOUR
-        val min = if (minute != -1) minute else 0
+        val t = tour ?: return
+        val sessions = t.sessionList()
+        // по умолчанию открываем на первом сеансе
+        var h = 10
+        var min = 0
+        if (hour != -1) {
+            h = hour
+            min = minute
+        } else if (sessions.isNotEmpty()) {
+            val parts = sessions[0].split(":")
+            h = parts[0].toInt()
+            min = parts[1].toInt()
+        }
 
         TimePickerDialog(this, { _, selHour, selMinute ->
-            // проверяем что попали в часы работы музея
-            if (selHour < OPEN_HOUR || selHour >= CLOSE_HOUR) {
-                Toast.makeText(this, R.string.error_work_hours, Toast.LENGTH_LONG).show()
+            val selected = String.format("%02d:%02d", selHour, selMinute)
+            // экскурсия начинается только в определённое время (сеансы)
+            if (!sessions.contains(selected)) {
+                Toast.makeText(
+                    this, getString(R.string.error_choose_session, sessions.joinToString(", ")), Toast.LENGTH_LONG
+                ).show()
             } else {
                 hour = selHour
                 minute = selMinute
@@ -235,7 +284,22 @@ class BookingActivity : AppCompatActivity() {
             return
         }
 
+        val btnBook = findViewById<Button>(R.id.btnBook)
+        btnBook.isEnabled = false
         lifecycleScope.launch {
+            // перед записью берём свежие брони из облака - вдруг кто-то записался с другого телефона
+            repository.syncFromCloud()
+            val booked = repository.getBookedPeople(t.id, formatDate(), formatTime())
+            val free = t.maxPeople - booked
+            if (adults + children > free) {
+                btnBook.isEnabled = true
+                Toast.makeText(
+                    this@BookingActivity, getString(R.string.error_not_enough_seats, free), Toast.LENGTH_LONG
+                ).show()
+                updateFreeSeats()
+                return@launch
+            }
+
             repository.addBooking(
                 session.getUserId(), t.id, formatDate(), formatTime(),
                 adults, children, cbAudioGuide.isChecked, calculateTotal()

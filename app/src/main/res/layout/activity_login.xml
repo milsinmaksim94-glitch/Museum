@@ -8,18 +8,28 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_screen">
+        android:padding="@dimen/margin_large">
 
-        <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="@dimen/logo_size"
-            android:layout_height="@dimen/logo_size"
+        <!-- логотип в круге -->
+        <FrameLayout
+            android:id="@+id/logoCircle"
+            android:layout_width="@dimen/logo_circle"
+            android:layout_height="@dimen/logo_circle"
             android:layout_marginTop="@dimen/margin_huge"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_museum"
+            android:background="@drawable/circle_soft"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="@dimen/logo_size"
+                android:layout_height="@dimen/logo_size"
+                android:layout_gravity="center"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/margin_medium"
+                android:src="@drawable/ic_museum" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tvHeader"
@@ -30,67 +40,82 @@
             android:text="@string/app_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivLogo" />
+            app:layout_constraintTop_toBottomOf="@id/logoCircle" />
 
         <TextView
             android:id="@+id/tvSubheader"
             style="@style/BodyText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_tiny"
+            android:gravity="center"
             android:text="@string/login_subtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvHeader" />
+            app:layout_constraintTop_toBottomOf="@id/tvHeader"
+            app:layout_constraintWidth_max="@dimen/form_max_width" />
 
-        <EditText
-            android:id="@+id/etLogin"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilLogin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:autofillHints="username"
+            android:layout_marginTop="@dimen/margin_huge"
             android:hint="@string/hint_login"
-            android:inputType="text"
-            android:maxLines="1"
+            app:startIconDrawable="@drawable/ic_person"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSubheader"
-            app:layout_constraintWidth_max="@dimen/form_max_width" />
+            app:layout_constraintWidth_max="@dimen/form_max_width">
 
-        <EditText
-            android:id="@+id/etPassword"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="username"
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:autofillHints="password"
+            android:layout_marginTop="@dimen/margin_medium"
             android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:maxLines="1"
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/ic_lock"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etLogin"
-            app:layout_constraintWidth_max="@dimen/form_max_width" />
+            app:layout_constraintTop_toBottomOf="@id/tilLogin"
+            app:layout_constraintWidth_max="@dimen/form_max_width">
 
-        <Button
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="password"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
-            style="@style/MainButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
             android:text="@string/btn_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etPassword"
+            app:layout_constraintTop_toBottomOf="@id/tilPassword"
             app:layout_constraintWidth_max="@dimen/form_max_width" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tvGoRegister"
+            style="@style/MuseumButton.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:padding="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
             android:text="@string/link_register"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/text_subtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnLogin" />

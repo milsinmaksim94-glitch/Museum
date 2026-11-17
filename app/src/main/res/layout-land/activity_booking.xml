@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Альбомный вариант: слева дата и время, справа количество билетов и сумма -->
+<!-- Альбомный вариант: слева экскурсия и время, справа количество людей и сумма -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -17,175 +17,229 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
 
-        <!-- ===== левая колонка ===== -->
         <TextView
             android:id="@+id/tvTourTitle"
             style="@style/HeaderText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_medium"
             app:layout_constraintEnd_toStartOf="@id/guideCenter"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="@dimen/margin_small"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvTourInfo"
-            style="@style/BodyText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_medium"
-            app:layout_constraintEnd_toStartOf="@id/guideCenter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTourTitle" />
-
-        <Button
-            android:id="@+id/btnDate"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:text="@string/btn_choose_date"
+            app:cardBackgroundColor="@color/primary_soft"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toStartOf="@id/guideCenter"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTourInfo" />
+            android:layout_marginEnd="@dimen/margin_small"
+            app:layout_constraintTop_toBottomOf="@id/tvTourTitle">
 
-        <Button
-            android:id="@+id/btnTime"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            <TextView
+                android:id="@+id/tvTourInfo"
+                style="@style/BodyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:padding="@dimen/card_padding"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardWhen"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:text="@string/btn_choose_time"
+            android:layout_marginTop="@dimen/margin_medium"
             app:layout_constraintEnd_toStartOf="@id/guideCenter"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnDate" />
+            android:layout_marginEnd="@dimen/margin_small"
+            app:layout_constraintTop_toBottomOf="@id/cardInfo">
 
-        <TextView
-            android:id="@+id/tvWorkHours"
-            style="@style/SmallText"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/card_padding">
+
+                <TextView
+                    style="@style/SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/section_when" />
+
+                <!-- дата и сеанс в один ряд -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDate"
+                        style="@style/MuseumButton.Outlined"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_tiny"
+                        android:layout_weight="1"
+                        android:text="@string/btn_choose_date"
+                        app:icon="@drawable/ic_tour" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTime"
+                        style="@style/MuseumButton.Outlined"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_tiny"
+                        android:layout_weight="1"
+                        android:text="@string/btn_choose_time"
+                        app:icon="@drawable/ic_time" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvWorkHours"
+                    style="@style/SmallText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/work_hours" />
+
+                <!-- сколько осталось мест на выбранный сеанс -->
+                <TextView
+                    android:id="@+id/tvFreeSeats"
+                    style="@style/SubtitleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardWho"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:text="@string/work_hours"
-            app:layout_constraintEnd_toStartOf="@id/guideCenter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnTime" />
-
-        <!-- ===== правая колонка ===== -->
-        <LinearLayout
-            android:id="@+id/rowAdults"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideCenter"
+            android:layout_marginStart="@dimen/margin_small"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                style="@style/SubtitleText"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/label_adults" />
+                android:orientation="vertical"
+                android:padding="@dimen/card_padding">
 
-            <ImageButton
-                android:id="@+id/btnAdultsMinus"
-                android:layout_width="@dimen/counter_button"
-                android:layout_height="@dimen/counter_button"
-                android:contentDescription="@string/btn_minus"
-                android:src="@drawable/ic_remove" />
+                <TextView
+                    style="@style/SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    android:text="@string/section_who" />
 
-            <TextView
-                android:id="@+id/tvAdults"
-                style="@style/TitleText"
-                android:layout_width="@dimen/counter_text_width"
+            <LinearLayout
+                android:id="@+id/rowAdults"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/btnAdultsPlus"
-                android:layout_width="@dimen/counter_button"
-                android:layout_height="@dimen/counter_button"
-                android:contentDescription="@string/btn_plus"
-                android:src="@drawable/ic_add" />
-        </LinearLayout>
+                <TextView
+                    style="@style/SubtitleText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/label_adults" />
 
-        <LinearLayout
-            android:id="@+id/rowChildren"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_small"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideCenter"
-            app:layout_constraintTop_toBottomOf="@id/rowAdults">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAdultsMinus"
+                    style="@style/CounterButton"
+                    android:contentDescription="@string/btn_minus"
+                    app:icon="@drawable/ic_remove" />
 
-            <TextView
-                style="@style/SubtitleText"
-                android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tvAdults"
+                    style="@style/TitleText"
+                    android:layout_width="@dimen/counter_text_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAdultsPlus"
+                    style="@style/CounterButton"
+                    android:contentDescription="@string/btn_plus"
+                    app:icon="@drawable/ic_add" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/rowChildren"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/label_children" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/margin_small">
 
-            <ImageButton
-                android:id="@+id/btnChildrenMinus"
-                android:layout_width="@dimen/counter_button"
-                android:layout_height="@dimen/counter_button"
-                android:contentDescription="@string/btn_minus"
-                android:src="@drawable/ic_remove" />
+                <TextView
+                    style="@style/SubtitleText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/label_children" />
 
-            <TextView
-                android:id="@+id/tvChildren"
-                style="@style/TitleText"
-                android:layout_width="@dimen/counter_text_width"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnChildrenMinus"
+                    style="@style/CounterButton"
+                    android:contentDescription="@string/btn_minus"
+                    app:icon="@drawable/ic_remove" />
 
-            <ImageButton
-                android:id="@+id/btnChildrenPlus"
-                android:layout_width="@dimen/counter_button"
-                android:layout_height="@dimen/counter_button"
-                android:contentDescription="@string/btn_plus"
-                android:src="@drawable/ic_add" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/tvChildren"
+                    style="@style/TitleText"
+                    android:layout_width="@dimen/counter_text_width"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
 
-        <CheckBox
-            android:id="@+id/cbAudioGuide"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:text="@string/label_audio_guide"
-            android:textSize="@dimen/text_subtitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideCenter"
-            app:layout_constraintTop_toBottomOf="@id/rowChildren" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnChildrenPlus"
+                    style="@style/CounterButton"
+                    android:contentDescription="@string/btn_plus"
+                    app:icon="@drawable/ic_add" />
+            </LinearLayout>
 
+                <CheckBox
+                    android:id="@+id/cbAudioGuide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/label_audio_guide"
+                    android:textSize="@dimen/text_subtitle" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- итоговая сумма, пересчитывается сразу -->
         <TextView
             android:id="@+id/tvTotal"
             style="@style/HeaderText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_large"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideCenter"
-            app:layout_constraintTop_toBottomOf="@id/cbAudioGuide" />
+            android:layout_marginStart="@dimen/margin_small"
+            app:layout_constraintTop_toBottomOf="@id/cardWho" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBook"
-            style="@style/MainButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
             android:text="@string/btn_confirm_booking"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideCenter"
+            android:layout_marginStart="@dimen/margin_small"
             app:layout_constraintTop_toBottomOf="@id/tvTotal" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

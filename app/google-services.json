@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1003317835700",
+    "project_id": "muzei-b9ed7",
+    "storage_bucket": "muzei-b9ed7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003317835700:android:c835d70a1821a7a08ca4e1",
+        "android_client_info": {
+          "package_name": "com.museum.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpn9g7JfZANaL775ep7Jel5N3iJ0sl_5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

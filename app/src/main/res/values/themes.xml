@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Светлая тема приложения -->
-    <style name="Theme.Museum" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <!-- Базовая тема. Цвета берутся из colors.xml (светлые) или values-night/colors.xml (тёмные) -->
+    <style name="Base.Theme.Museum" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_dark</item>
         <item name="colorOnPrimary">@color/on_primary</item>
@@ -14,6 +14,91 @@
         <item name="android:statusBarColor">@color/primary_dark</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
+
+        <!-- общий вид кнопок и полей ввода во всём приложении -->
+        <item name="materialButtonStyle">@style/MuseumButton</item>
+        <item name="materialButtonOutlinedStyle">@style/MuseumButton.Outlined</item>
+        <item name="borderlessButtonStyle">@style/MuseumButton.Text</item>
+        <item name="textInputStyle">@style/MuseumTextInput</item>
+        <item name="materialCardViewStyle">@style/CardStyle</item>
+        <item name="actionBarStyle">@style/MuseumActionBar</item>
+    </style>
+
+    <!-- Светлая тема приложения -->
+    <style name="Theme.Museum" parent="Base.Theme.Museum" />
+
+    <!-- верхняя панель без тени, так аккуратнее смотрится с вкладками -->
+    <style name="MuseumActionBar" parent="Widget.MaterialComponents.Light.ActionBar.Solid">
+        <item name="background">@color/primary_toolbar</item>
+        <item name="elevation">0dp</item>
+        <item name="titleTextStyle">@style/MuseumActionBarTitle</item>
+    </style>
+
+    <style name="MuseumActionBarTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/on_toolbar</item>
+    </style>
+
+    <!-- кнопки: скруглённые, без капса -->
+    <style name="MuseumButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textSize">@dimen/text_button</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="cornerRadius">@dimen/corner_button</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="MuseumButton.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textSize">@dimen/text_button</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="cornerRadius">@dimen/corner_button</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="strokeColor">@color/primary</item>
+    </style>
+
+    <style name="MuseumButton.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textSize">@dimen/text_button</item>
+    </style>
+
+    <!-- круглая кнопка "+" / "-" для счётчиков -->
+    <style name="CounterButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_width">@dimen/counter_button</item>
+        <item name="android:layout_height">@dimen/counter_button</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="cornerRadius">@dimen/counter_corner</item>
+        <item name="strokeColor">@color/primary</item>
+    </style>
+
+    <!-- поля ввода в рамке с подписью сверху -->
+    <style name="MuseumTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/corner_input</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/corner_input</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/corner_input</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/corner_input</item>
+        <item name="boxStrokeColor">@color/input_stroke</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="startIconTint">@color/text_secondary</item>
+    </style>
+
+    <!-- вкладки без капса -->
+    <style name="TabText" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text_subtitle</item>
+        <item name="android:letterSpacing">0</item>
     </style>
 
     <!-- Общие стили для текста и элементов, чтобы не повторять одно и то же в разметке -->
@@ -29,6 +114,15 @@
         <item name="android:textColor">@color/text_primary</item>
     </style>
 
+    <!-- заголовок раздела внутри экрана -->
+    <style name="SectionTitle">
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
     <style name="SubtitleText">
         <item name="android:textSize">@dimen/text_subtitle</item>
         <item name="android:textColor">@color/text_primary</item>
@@ -37,6 +131,7 @@
     <style name="BodyText">
         <item name="android:textSize">@dimen/text_body</item>
         <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:lineSpacingExtra">2dp</item>
     </style>
 
     <style name="SmallText">
@@ -44,14 +139,37 @@
         <item name="android:textColor">@color/text_secondary</item>
     </style>
 
-    <style name="MainButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:minHeight">@dimen/button_height</item>
-        <item name="android:textSize">@dimen/text_subtitle</item>
-    </style>
+    <style name="MainButton" parent="MuseumButton" />
 
     <style name="CardStyle" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">@dimen/card_corner</item>
         <item name="cardElevation">@dimen/card_elevation</item>
         <item name="cardBackgroundColor">@color/card_background</item>
+    </style>
+
+    <!-- строка-пункт меню в профиле -->
+    <style name="MenuRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/menu_row_height</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">@dimen/padding_screen</item>
+        <item name="android:paddingEnd">@dimen/padding_screen</item>
+    </style>
+
+    <style name="MenuRowIcon">
+        <item name="android:layout_width">@dimen/icon_small</item>
+        <item name="android:layout_height">@dimen/icon_small</item>
+        <item name="tint">@color/primary</item>
+    </style>
+
+    <style name="MenuRowText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/margin_large</item>
+        <item name="android:textSize">@dimen/text_subtitle</item>
+        <item name="android:textColor">@color/text_primary</item>
     </style>
 </resources>

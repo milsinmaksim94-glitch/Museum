@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.museum.app.R
 import com.museum.app.data.Exhibit
+import com.museum.app.utils.ImageHelper
 
 // Адаптер для списка экспонатов.
 // onDelete передаём только в админке, тогда появляется кнопка удаления
@@ -18,6 +20,7 @@ class ExhibitAdapter(
 ) : RecyclerView.Adapter<ExhibitAdapter.ExhibitViewHolder>() {
 
     class ExhibitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val ivPhoto: ImageView = view.findViewById(R.id.ivPhoto)
         val tvTitle: TextView = view.findViewById(R.id.tvTitle)
         val tvAuthor: TextView = view.findViewById(R.id.tvAuthor)
         val tvHall: TextView = view.findViewById(R.id.tvHall)
@@ -34,15 +37,17 @@ class ExhibitAdapter(
         val exhibit = items[position]
         val context = holder.itemView.context
 
+        ImageHelper.show(holder.ivPhoto, exhibit.image, R.drawable.ic_museum)
         holder.tvTitle.text = exhibit.title
         holder.tvAuthor.text = context.getString(R.string.format_author_year, exhibit.author, exhibit.year)
-        holder.tvHall.text = context.getString(R.string.format_hall, exhibit.hallName)
+        holder.tvHall.text = context.getString(R.string.format_hall_place, exhibit.hallName, exhibit.placeName)
 
-        // если оценок ещё нет, то так и пишем
+        // средняя оценка, если её нет - строку прячем
         if (exhibit.rating > 0) {
+            holder.tvRating.visibility = View.VISIBLE
             holder.tvRating.text = context.getString(R.string.format_rating, exhibit.rating)
         } else {
-            holder.tvRating.text = context.getString(R.string.no_rating)
+            holder.tvRating.visibility = View.GONE
         }
 
         holder.itemView.setOnClickListener { onClick(exhibit) }

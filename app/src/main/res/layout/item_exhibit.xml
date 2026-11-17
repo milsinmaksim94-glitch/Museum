@@ -12,12 +12,16 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/card_padding">
 
-        <ImageView
-            android:id="@+id/ivIcon"
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
+        <!-- фото экспоната -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivPhoto"
+            android:layout_width="@dimen/thumb_size"
+            android:layout_height="@dimen/thumb_size"
+            android:background="@color/divider"
             android:contentDescription="@string/title_exhibit"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_museum"
+            app:shapeAppearanceOverlay="@style/RoundedThumb"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +34,7 @@
             android:layout_marginEnd="@dimen/margin_small"
             android:orientation="vertical"
             app:layout_constraintEnd_toStartOf="@id/btnDelete"
-            app:layout_constraintStart_toEndOf="@id/ivIcon"
+            app:layout_constraintStart_toEndOf="@id/ivPhoto"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView

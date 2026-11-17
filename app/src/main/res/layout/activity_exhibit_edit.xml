@@ -1,98 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Форма экспоната: поля в рамках с подписями, чтобы было видно что где -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="@dimen/padding_screen">
 
+        <!-- фото + кнопка выбора из галереи -->
+        <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/place_photo_height"
+                android:contentDescription="@string/label_photo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_museum_large"
+                app:shapeAppearanceOverlay="@style/RoundedThumb" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPhoto"
+            style="@style/MuseumButton.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/btn_choose_photo"
+            app:icon="@drawable/ic_photo" />
+
         <TextView
-            android:id="@+id/tvHallLabel"
-            style="@style/BodyText"
+            style="@style/SectionTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_hall"
-            app:layout_constraintBottom_toBottomOf="@id/spinnerHall"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/spinnerHall" />
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/label_hall_section" />
 
         <Spinner
             android:id="@+id/spinnerHall"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:minHeight="@dimen/icon_size"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tvHallLabel"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:minHeight="@dimen/icon_size" />
 
-        <EditText
-            android:id="@+id/etTitle"
-            android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium"
-            android:hint="@string/hint_exhibit_title"
-            android:importantForAutofill="no"
-            android:inputType="textCapSentences"
-            android:maxLength="100"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spinnerHall" />
+            android:hint="@string/hint_exhibit_title">
 
-        <EditText
-            android:id="@+id/etAuthor"
-            android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:inputType="textCapSentences"
+                android:maxLines="1"
+                android:maxLength="100" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:hint="@string/hint_exhibit_author"
-            android:importantForAutofill="no"
-            android:inputType="textCapWords"
-            android:maxLength="100"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etTitle" />
+            android:layout_marginTop="@dimen/margin_medium"
+            android:hint="@string/hint_exhibit_author">
 
-        <EditText
-            android:id="@+id/etYear"
-            android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:maxLength="100" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- год и инвентарный номер в одну строку -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:hint="@string/hint_exhibit_year"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:maxLength="40"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etAuthor" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/etDescription"
-            android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_tiny"
+                android:hint="@string/hint_exhibit_year">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:maxLength="40" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_tiny"
+                android:hint="@string/hint_exhibit_inv">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etInvNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapCharacters"
+                    android:maxLines="1"
+                    android:maxLength="20" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:gravity="top"
-            android:hint="@string/hint_exhibit_description"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine|textCapSentences"
-            android:maxLength="1000"
-            android:minHeight="@dimen/description_min_lines_height"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etYear" />
+            android:layout_marginTop="@dimen/margin_medium"
+            android:hint="@string/hint_exhibit_material">
 
-        <Button
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMaterial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:inputType="textCapSentences"
+                android:maxLines="1"
+                android:maxLength="100" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:hint="@string/hint_exhibit_description">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine|textCapSentences"
+                android:gravity="top"
+                android:minLines="3"
+                android:maxLength="1000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
-            style="@style/MainButton"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/btn_save"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etDescription" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:text="@string/btn_save" />
+    </LinearLayout>
 </ScrollView>

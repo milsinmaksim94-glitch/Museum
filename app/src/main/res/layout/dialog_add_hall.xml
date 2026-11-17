@@ -4,32 +4,69 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/padding_screen">
+    android:paddingStart="@dimen/margin_large"
+    android:paddingTop="@dimen/margin_small"
+    android:paddingEnd="@dimen/margin_large">
 
-    <EditText
-        android:id="@+id/etHallName"
+    <TextView
+        style="@style/SectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_place_section" />
+
+    <!-- в какой площадке зал -->
+    <Spinner
+        android:id="@+id/spinnerPlace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_hall_name"
-        android:importantForAutofill="no"
-        android:inputType="textCapSentences"
-        android:maxLength="60" />
+        android:minHeight="@dimen/icon_size" />
 
-    <EditText
-        android:id="@+id/etHallFloor"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_hall_floor"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:maxLength="2" />
+        android:layout_marginTop="@dimen/margin_medium"
+        android:hint="@string/hint_hall_name">
 
-    <EditText
-        android:id="@+id/etHallDescription"
+    <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etHallName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAutofill="no"
+            android:inputType="textCapSentences"
+            android:maxLines="1"
+            android:maxLength="60" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_hall_description"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine|textCapSentences"
-        android:maxLength="300" />
+        android:layout_marginTop="@dimen/margin_medium"
+        android:hint="@string/hint_hall_floor">
+
+    <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etHallFloor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLines="1"
+            android:maxLength="2" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:hint="@string/hint_hall_description">
+
+    <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etHallDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="1"
+            android:maxLength="300" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>

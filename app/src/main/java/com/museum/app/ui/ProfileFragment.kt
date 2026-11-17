@@ -16,6 +16,8 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import com.museum.app.R
 import com.museum.app.data.MuseumRepository
 import com.museum.app.utils.SessionManager
+import com.museum.app.utils.FormUtils
+import com.museum.app.utils.ImageHelper
 import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
@@ -42,11 +44,11 @@ class ProfileFragment : Fragment() {
         tvRole = view.findViewById(R.id.tvRole)
         etName = view.findViewById(R.id.etName)
         etNewPassword = view.findViewById(R.id.etNewPassword)
-        val btnAdmin = view.findViewById<Button>(R.id.btnAdmin)
+        val adminBlock = view.findViewById<View>(R.id.adminBlock)
         val switchTheme = view.findViewById<SwitchMaterial>(R.id.switchTheme)
 
         // админку показываем только админу
-        btnAdmin.visibility = if (session.isAdmin()) View.VISIBLE else View.GONE
+        adminBlock.visibility = if (session.isAdmin()) View.VISIBLE else View.GONE
 
         // если экран пересоздан (поворот), то в поле уже может быть текст - не затираем его
         loadUser(savedInstanceState == null)
@@ -54,13 +56,16 @@ class ProfileFragment : Fragment() {
         view.findViewById<Button>(R.id.btnSaveName).setOnClickListener { saveName() }
         view.findViewById<Button>(R.id.btnSavePassword).setOnClickListener { savePassword() }
 
-        view.findViewById<Button>(R.id.btnFavorites).setOnClickListener {
+        view.findViewById<View>(R.id.btnFavorites).setOnClickListener {
             startActivity(Intent(requireContext(), FavoritesActivity::class.java))
         }
-        view.findViewById<Button>(R.id.btnMyBookings).setOnClickListener {
+        view.findViewById<View>(R.id.btnMyBookings).setOnClickListener {
             startActivity(Intent(requireContext(), MyBookingsActivity::class.java))
         }
-        btnAdmin.setOnClickListener {
+        view.findViewById<View>(R.id.btnAbout).setOnClickListener {
+            startActivity(Intent(requireContext(), AboutActivity::class.java))
+        }
+        view.findViewById<View>(R.id.btnAdmin).setOnClickListener {
             startActivity(Intent(requireContext(), AdminActivity::class.java))
         }
 
@@ -77,6 +82,8 @@ class ProfileFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             val user = repository.getUser(session.getUserId()) ?: return@launch
             tvLogin.text = user.login
+            // инициалы в кружке-аватарке
+            view?.findViewById<TextView>(R.id.tvAvatar)?.text = ImageHelper.initials(user.name.ifEmpty { user.login })
             tvRole.text = if (user.isAdmin()) getString(R.string.role_admin) else getString(R.string.role_user)
             if (fillName) {
                 etName.setText(user.name)
@@ -87,7 +94,7 @@ class ProfileFragment : Fragment() {
     private fun saveName() {
         val name = etName.text.toString().trim()
         if (name.isEmpty()) {
-            etName.error = getString(R.string.error_empty_field)
+            FormUtils.showError(etName, getString(R.string.error_empty_field))
             return
         }
         viewLifecycleOwner.lifecycleScope.launch {
@@ -99,7 +106,7 @@ class ProfileFragment : Fragment() {
     private fun savePassword() {
         val password = etNewPassword.text.toString()
         if (password.length < 6) {
-            etNewPassword.error = getString(R.string.error_password_short)
+            FormUtils.showError(etNewPassword, getString(R.string.error_password_short))
             return
         }
         viewLifecycleOwner.lifecycleScope.launch {

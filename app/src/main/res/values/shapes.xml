@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- скругление углов у маленьких фото в списках -->
+    <style name="RoundedThumb">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/thumb_corner</item>
+    </style>
+
+    <!-- круглая картинка (аватар) -->
+    <style name="CircleImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>

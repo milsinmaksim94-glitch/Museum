@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Музей</string>
 
-    <!-- ===== Заголовки экранов ===== -->
+    <!-- заголовки экранов -->
     <string name="title_login">Вход</string>
     <string name="title_register">Регистрация</string>
     <string name="title_exhibit">Экспонат</string>
@@ -12,7 +12,7 @@
     <string name="title_favorites">Избранное</string>
     <string name="title_admin">Панель администратора</string>
 
-    <!-- ===== Нижнее меню и вкладки ===== -->
+    <!-- нижнее меню и вкладки -->
     <string name="nav_home">Главная</string>
     <string name="nav_search">Поиск</string>
     <string name="nav_tours">Экскурсии</string>
@@ -22,7 +22,7 @@
     <string name="tab_halls">Залы</string>
     <string name="tab_bookings">Брони</string>
 
-    <!-- ===== Вход и регистрация ===== -->
+    <!-- вход и регистрация -->
     <string name="login_subtitle">Войдите, чтобы смотреть коллекцию и записываться на экскурсии</string>
     <string name="hint_login">Логин</string>
     <string name="hint_password">Пароль</string>
@@ -35,12 +35,10 @@
     <string name="register_success">Регистрация успешна</string>
     <string name="welcome_user">Добро пожаловать, %s!</string>
 
-    <!-- ===== Кнопки ===== -->
+    <!-- кнопки -->
     <string name="btn_save">Сохранить</string>
-    <string name="btn_change">Сменить</string>
     <string name="btn_delete">Удалить</string>
     <string name="btn_add">Добавить</string>
-    <string name="btn_send">Отправить</string>
     <string name="btn_book">Записаться</string>
     <string name="btn_confirm_booking">Забронировать</string>
     <string name="btn_choose_date">Выбрать дату</string>
@@ -52,7 +50,7 @@
     <string name="no">Нет</string>
     <string name="cancel">Отмена</string>
 
-    <!-- ===== Списки и поиск ===== -->
+    <!-- списки и поиск -->
     <string name="list_empty">Здесь пока пусто</string>
     <string name="hint_search">Название или автор</string>
     <string name="search_nothing">Ничего не найдено</string>
@@ -61,11 +59,10 @@
     <string name="no_favorites">Вы ещё ничего не добавили в избранное</string>
     <string name="no_bookings">Записей пока нет</string>
 
-    <!-- ===== Экспонат и отзывы ===== -->
+    <!-- экспонат и отзывы -->
     <string name="format_author_year">%1$s, %2$s</string>
     <string name="format_author">Автор: %s</string>
     <string name="format_year">Датировка: %s</string>
-    <string name="format_hall">Зал: %s</string>
     <string name="format_rating">★ %.1f</string>
     <string name="format_rating_value">%.1f из 5</string>
     <string name="no_rating">Оценок пока нет</string>
@@ -80,11 +77,11 @@
     <string name="added_to_favorites">Добавлено в избранное</string>
     <string name="removed_from_favorites">Убрано из избранного</string>
 
-    <!-- ===== Экскурсии и бронирование ===== -->
+    <!-- экскурсии и бронирование -->
     <string name="format_price">%d ₽</string>
     <string name="format_total">Итого: %d ₽</string>
-    <string name="format_tour_info">%1$s · %2$d мин</string>
-    <string name="format_tour_full_info">Зал: %1$s\nДлительность: %2$d мин\nВзрослый билет: %3$d ₽, детский в 2 раза дешевле</string>
+    <string name="format_tour_info">%1$s, зал «%2$s» · %3$d мин · до %4$d человек</string>
+    <string name="format_tour_full_info">Где: %1$s, зал «%2$s»\nВедёт: %3$s\nДлительность: %4$d мин\nВзрослый билет: %5$d ₽, детский в 2 раза дешевле\nВ группе до %6$d человек</string>
     <string name="work_hours">Экскурсии начинаются с 10:00 до 18:00</string>
     <string name="label_adults">Взрослые</string>
     <string name="label_children">Дети (до 14 лет)</string>
@@ -98,7 +95,7 @@
     <string name="cancel_booking_question">Отменить запись на «%1$s» (%2$s)?</string>
     <string name="booking_cancelled">Запись отменена</string>
 
-    <!-- ===== Статусы брони ===== -->
+    <!-- статусы брони -->
     <string name="status_new">Новая</string>
     <string name="status_confirmed">Подтверждена</string>
     <string name="status_cancelled">Отменена</string>
@@ -106,7 +103,7 @@
     <string name="change_status_title">Статус брони</string>
     <string name="status_changed">Статус изменён</string>
 
-    <!-- ===== Профиль ===== -->
+    <!-- профиль -->
     <string name="role_user">Посетитель</string>
     <string name="role_admin">Администратор</string>
     <string name="hint_new_password">Новый пароль</string>
@@ -115,7 +112,7 @@
     <string name="password_changed">Пароль изменён</string>
     <string name="logout_question">Точно выйти из аккаунта?</string>
 
-    <!-- ===== Админка ===== -->
+    <!-- админка -->
     <string name="hint_exhibit_title">Название *</string>
     <string name="hint_exhibit_author">Автор</string>
     <string name="hint_exhibit_year">Год или век</string>
@@ -127,13 +124,12 @@
     <string name="hint_hall_name">Название зала</string>
     <string name="hint_hall_floor">Этаж</string>
     <string name="hint_hall_description">Описание</string>
-    <string name="format_floor">Этаж: %d</string>
     <string name="hall_added">Зал добавлен</string>
     <string name="hall_deleted">Зал «%s» удалён</string>
     <string name="delete_hall_title">Удаление зала</string>
     <string name="delete_hall_question">Удалить зал «%s»? Все экспонаты и экскурсии этого зала тоже удалятся.</string>
 
-    <!-- ===== Ошибки ===== -->
+    <!-- ошибки -->
     <string name="error_empty_field">Заполните это поле</string>
     <string name="error_wrong_login">Неверный логин или пароль</string>
     <string name="error_login_short">Логин должен быть не короче 3 символов</string>
@@ -150,10 +146,115 @@
     <string name="error_children_alone">Дети могут прийти только со взрослым</string>
     <string name="error_max_people">В группе не больше %d человек</string>
     <string name="error_time_in_past">Это время уже прошло, выберите другое</string>
-    <string name="error_work_hours">В это время экскурсий нет. Выберите время с 10:00 до 18:00</string>
     <string name="error_cant_cancel">Отменить можно только новую запись</string>
     <string name="error_no_access">Нет доступа</string>
     <string name="error_no_halls">Сначала добавьте хотя бы один зал</string>
     <string name="error_choose_hall">Выберите зал</string>
     <string name="error_wrong_floor">Введите номер этажа (число от 1)</string>
+
+    <!-- версия 2: площадки, экскурсоводы, фото, общая база -->
+    <string name="title_about">О музее</string>
+    <string name="title_guide">Экскурсовод</string>
+    <string name="title_guide_add">Новый экскурсовод</string>
+    <string name="title_guide_edit">Экскурсовод</string>
+    <string name="title_place">Площадка</string>
+    <string name="title_place_add">Новая площадка</string>
+    <string name="title_place_edit">Площадка</string>
+    <string name="tab_tours">Экскурсии</string>
+    <string name="tab_guides">Гиды</string>
+    <string name="tab_places">Площадки</string>
+
+    <string name="action_refresh">Обновить данные</string>
+    <string name="sync_started">Загружаем свежие данные...</string>
+    <string name="sync_ok">Данные обновлены</string>
+    <string name="sync_error">Не удалось обновить данные. Проверьте интернет</string>
+    <string name="saved">Сохранено</string>
+
+    <string name="format_hall_place">Зал «%1$s», %2$s</string>
+    <string name="format_hall_in_place">%1$s (%2$s)</string>
+    <string name="format_place_floor">%1$s, этаж %2$d</string>
+    <string name="format_hall_line">• %1$s - %2$d этаж</string>
+    <string name="format_material">Материал: %s</string>
+    <string name="format_inv_number">Инв. № %s</string>
+    <string name="format_guide">Ведёт: %s</string>
+    <string name="format_sessions">Сеансы: %s</string>
+    <string name="format_experience">Стаж %1$d лет · %2$s</string>
+    <string name="format_metro">Метро: %s</string>
+    <string name="format_phone">Телефон: %s</string>
+    <string name="format_free_seats">Свободно мест: %1$d из %2$d</string>
+    <string name="no_free_seats">Мест нет, выберите другой сеанс</string>
+    <string name="choose_session_hint">Выберите дату и сеанс, чтобы увидеть свободные места</string>
+    <string name="no_tours">Экскурсий пока нет</string>
+    <string name="no_halls">Залов пока нет</string>
+
+    <string name="label_guide_photo">Фото экскурсовода</string>
+    <string name="label_place_photo">Фото площадки</string>
+    <string name="label_guide_tours">Экскурсии гида</string>
+    <string name="label_place_halls">Залы</string>
+    <string name="label_place_tours">Экскурсии здесь</string>
+    <string name="btn_map">На карте</string>
+    <string name="btn_call">Позвонить</string>
+    <string name="btn_choose_photo">Выбрать фото из галереи</string>
+
+    <string name="hint_exhibit_material">Материал, техника</string>
+    <string name="hint_exhibit_inv">Инв. номер</string>
+    <string name="hint_guide_name">Имя и фамилия *</string>
+    <string name="hint_guide_position">Должность</string>
+    <string name="hint_guide_experience">Стаж, лет *</string>
+    <string name="hint_guide_languages">Языки экскурсий</string>
+    <string name="hint_guide_bio">О себе</string>
+    <string name="hint_place_name">Название *</string>
+    <string name="hint_place_address">Адрес *</string>
+    <string name="hint_place_metro">Метро и сколько идти</string>
+    <string name="hint_place_hours">Часы работы</string>
+    <string name="hint_place_phone">Телефон</string>
+    <string name="hint_place_lat">Широта</string>
+    <string name="hint_place_lon">Долгота</string>
+    <string name="hint_place_description">Описание</string>
+
+    <string name="delete_guide_title">Удаление экскурсовода</string>
+    <string name="delete_guide_question">Удалить «%s»? Его экскурсии тоже удалятся.</string>
+    <string name="guide_deleted">Экскурсовод «%s» удалён</string>
+    <string name="delete_place_title">Удаление площадки</string>
+    <string name="delete_place_question">Удалить «%s»? Вместе с ней удалятся её залы, экспонаты и экскурсии.</string>
+    <string name="place_deleted">Площадка «%s» удалена</string>
+
+    <string name="error_choose_session">Экскурсия начинается только в эти часы: %s</string>
+    <string name="error_not_enough_seats">На этот сеанс осталось мест: %d</string>
+    <string name="error_no_map_app">Нет приложения карт</string>
+    <string name="error_no_dial_app">Нет приложения для звонков</string>
+    <string name="error_no_places">Сначала добавьте хотя бы одну площадку</string>
+    <string name="error_photo">Не получилось загрузить фото</string>
+    <string name="error_wrong_number">Введите правильное число</string>
+    <string name="error_login_again">Пожалуйста, войдите заново</string>
+
+    <!-- экран "О музее" -->
+    <string name="about_title">Музей: три площадки, одна коллекция</string>
+    <string name="about_text">Учебный музей с коллекцией от Древнего Египта до русской живописи XIX века. Экспозиция занимает три здания: главное здание, дом-мастерскую художника и выставочный зал на набережной.\n\nБольшинство картин в залах - музейные копии знаменитых работ, а предметы Древнего мира и оружие - реконструкции. Каждый экспонат имеет свой инвентарный номер, как в настоящем музее.</string>
+    <string name="about_visit_title">Как нас посетить</string>
+    <string name="about_visit_text">• Экскурсии идут по сеансам, запись - в приложении на вкладке «Экскурсии».\n• В группе ограниченное число мест, свободные места видны при записи.\n• Детский билет (до 14 лет) в 2 раза дешевле взрослого.\n• Аудиогид - 200 ₽ на человека.\n• Отменить запись можно в профиле, пока она не подтверждена администратором.\n• Адреса и часы работы всех площадок - на вкладке «Экскурсии → Площадки».</string>
+    <string name="about_faq_title">Вопросы и ответы</string>
+    <string name="about_faq_text"><b>Можно ли прийти без записи?</b>\nМожно, но место в группе не гарантировано - лучше записаться заранее.\n\n<b>Можно ли фотографировать?</b>\nДа, без вспышки.\n\n<b>Можно ли с детьми?</b>\nДа. Для детей 6-12 лет есть квест «Тайна пропавшей амфоры». На вечерние экскурсии-спектакли дети до 7 лет не допускаются.\n\n<b>Как стать экскурсоводом?</b>\nНапишите администратору - новых гидов добавляют в разделе «Панель администратора».</string>
+    <string name="about_credits_title">Фотографии</string>
+    <string name="about_credits_text">Фото картин и предметов взяты с Wikimedia Commons:
+• Айвазовский, Шишкин, Репин, Васнецов, Куинджи, Левитан, Ван Гог - общественное достояние;
+• саркофаг Иотефамуна, Панафинейская амфора, «Мыслитель», доспех (мастер Кунц Лохнер), меч тати - The Metropolitan Museum of Art, открытый доступ (CC0);
+• денарий Веспасиана - Birmingham Museums Trust, лицензия CC BY-SA 4.0;
+• «Дискобол» - фото: Livioandronico2013, лицензия CC BY-SA 4.0.</string>
+
+    <!-- дизайн -->
+    <string name="register_header">Создайте аккаунт</string>
+    <string name="register_subtitle">Чтобы оставлять отзывы и записываться на экскурсии</string>
+    <string name="helper_login">От 3 символов, без пробелов</string>
+    <string name="helper_password">Не короче 6 символов</string>
+    <string name="section_personal">Личные данные</string>
+    <string name="section_museum">Музей</string>
+    <string name="section_when">Когда</string>
+    <string name="section_who">Кто идёт</string>
+    <string name="btn_save_name">Сохранить имя</string>
+    <string name="btn_change_password">Сменить пароль</string>
+    <string name="btn_send_review">Отправить отзыв</string>
+    <string name="label_photo">Фото</string>
+    <string name="label_hall_section">Зал</string>
+    <string name="label_place_section">Площадка</string>
 </resources>

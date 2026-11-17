@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.museum.app.R
 import com.museum.app.utils.SessionManager
 
-// Панель администратора: 3 вкладки - экспонаты, залы, брони
+// Админка: вкладки экспонаты, залы, гиды, площадки и брони
 class AdminActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,20 +36,26 @@ class AdminActivity : AppCompatActivity() {
         val titles = arrayOf(
             getString(R.string.tab_exhibits),
             getString(R.string.tab_halls),
+            getString(R.string.tab_guides),
+            getString(R.string.tab_places),
             getString(R.string.tab_bookings)
         )
+        // 5 вкладок не влезают в ширину, поэтому прокручиваемые
+        tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = titles[position]
         }.attach()
     }
 
     class AdminPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
-        override fun getItemCount(): Int = 3
+        override fun getItemCount(): Int = 5
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> AdminExhibitsFragment()
                 1 -> AdminHallsFragment()
+                2 -> AdminGuidesFragment()
+                3 -> AdminPlacesFragment()
                 else -> AdminBookingsFragment()
             }
         }

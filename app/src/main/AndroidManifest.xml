@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- интернет нужен для общей базы Firebase -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MuseumApp"
         android:allowBackup="true"
@@ -57,6 +60,31 @@
         <activity
             android:name=".ui.ExhibitEditActivity"
             android:label="@string/title_exhibit_edit"
+            android:parentActivityName=".ui.AdminActivity" />
+
+        <activity
+            android:name=".ui.GuideActivity"
+            android:label="@string/title_guide"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <activity
+            android:name=".ui.PlaceActivity"
+            android:label="@string/title_place"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <activity
+            android:name=".ui.AboutActivity"
+            android:label="@string/title_about"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <activity
+            android:name=".ui.GuideEditActivity"
+            android:label="@string/title_guide_edit"
+            android:parentActivityName=".ui.AdminActivity" />
+
+        <activity
+            android:name=".ui.PlaceEditActivity"
+            android:label="@string/title_place_edit"
             android:parentActivityName=".ui.AdminActivity" />
 
     </application>

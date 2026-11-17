@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -17,7 +19,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.museum.app.R
 import com.museum.app.adapters.HallAdapter
 import com.museum.app.data.Hall
+import com.museum.app.data.Place
 import com.museum.app.data.MuseumRepository
+import com.museum.app.utils.FormUtils
 import kotlinx.coroutines.launch
 
 // Админка: справочник залов
@@ -62,7 +66,25 @@ class AdminHallsFragment : Fragment() {
 
     // диалог с полями для нового зала
     private fun showAddDialog() {
+        // сначала грузим площадки для выпадающего списка
+        viewLifecycleOwner.lifecycleScope.launch {
+            val places = repository.getPlaces()
+            if (places.isEmpty()) {
+                Toast.makeText(requireContext(), R.string.error_no_places, Toast.LENGTH_LONG).show()
+                return@launch
+            }
+            showAddDialog(places)
+        }
+    }
+
+    private fun showAddDialog(places: List<Place>) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_hall, null)
+        val spinnerPlace = dialogView.findViewById<Spinner>(R.id.spinnerPlace)
+        val names = ArrayList<String>()
+        for (place in places) names.add(place.name)
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, names)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerPlace.adapter = spinnerAdapter
         val etName = dialogView.findViewById<EditText>(R.id.etHallName)
         val etFloor = dialogView.findViewById<EditText>(R.id.etHallFloor)
         val etDescription = dialogView.findViewById<EditText>(R.id.etHallDescription)
@@ -80,18 +102,19 @@ class AdminHallsFragment : Fragment() {
                 val floorText = etFloor.text.toString().trim()
 
                 if (name.isEmpty()) {
-                    etName.error = getString(R.string.error_empty_field)
+                    FormUtils.showError(etName, getString(R.string.error_empty_field))
                     return@setOnClickListener
                 }
                 // toIntOrNull вернёт null если там не число
                 val floor = floorText.toIntOrNull()
                 if (floor == null || floor < 1) {
-                    etFloor.error = getString(R.string.error_wrong_floor)
+                    FormUtils.showError(etFloor, getString(R.string.error_wrong_floor))
                     return@setOnClickListener
                 }
 
                 viewLifecycleOwner.lifecycleScope.launch {
-                    repository.addHall(name, floor, etDescription.text.toString().trim())
+                    val placeId = places[spinnerPlace.selectedItemPosition].id
+                    repository.addHall(placeId, name, floor, etDescription.text.toString().trim())
                     loadData()
                     Toast.makeText(requireContext(), R.string.hall_added, Toast.LENGTH_SHORT).show()
                 }

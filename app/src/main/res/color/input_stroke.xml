@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- рамка поля: в фокусе основной цвет, иначе серая, чтобы и в тёмной теме было видно -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/primary" android:state_focused="true" />
+    <item android:color="@color/primary" android:state_hovered="true" />
+    <item android:color="@color/text_secondary" android:state_enabled="false" android:alpha="0.4" />
+    <item android:color="@color/text_secondary" android:alpha="0.7" />
+</selector>

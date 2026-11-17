@@ -16,8 +16,8 @@
     <dimen name="text_small">12sp</dimen>
 
     <!-- карточки -->
-    <dimen name="card_corner">10dp</dimen>
-    <dimen name="card_elevation">3dp</dimen>
+    <dimen name="card_corner">16dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
     <dimen name="card_padding">12dp</dimen>
 
     <!-- прочее -->
@@ -29,4 +29,20 @@
     <dimen name="counter_text_width">40dp</dimen>
     <dimen name="form_max_width">420dp</dimen>
     <dimen name="description_min_lines_height">96dp</dimen>
+    <dimen name="thumb_size">72dp</dimen>
+    <dimen name="avatar_size">56dp</dimen>
+    <dimen name="avatar_big">96dp</dimen>
+    <dimen name="photo_header_height">240dp</dimen>
+    <dimen name="place_photo_height">140dp</dimen>
+    <dimen name="chip_padding">6dp</dimen>
+    <dimen name="text_button">15sp</dimen>
+    <dimen name="corner_button">12dp</dimen>
+    <dimen name="corner_input">12dp</dimen>
+    <dimen name="counter_corner">22dp</dimen>
+    <dimen name="menu_row_height">56dp</dimen>
+    <dimen name="avatar_profile">80dp</dimen>
+    <dimen name="thumb_corner">10dp</dimen>
+    <dimen name="logo_circle">112dp</dimen>
+    <dimen name="menu_divider_start">64dp</dimen>
+    <dimen name="photo_detail_height">300dp</dimen>
 </resources>

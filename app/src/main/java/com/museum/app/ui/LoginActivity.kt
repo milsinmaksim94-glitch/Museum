@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.museum.app.R
 import com.museum.app.data.MuseumRepository
 import com.museum.app.utils.SessionManager
+import com.museum.app.utils.FormUtils
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -43,6 +44,10 @@ class LoginActivity : AppCompatActivity() {
 
         btnLogin.setOnClickListener { tryLogin() }
 
+        // сразу подтягиваем пользователей из облака,
+        // чтобы можно было войти под аккаунтом, созданным на другом телефоне
+        lifecycleScope.launch { repository.syncFromCloud() }
+
         tvGoRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -55,11 +60,11 @@ class LoginActivity : AppCompatActivity() {
         // проверяем что поля не пустые
         var ok = true
         if (login.isEmpty()) {
-            etLogin.error = getString(R.string.error_empty_field)
+            FormUtils.showError(etLogin, getString(R.string.error_empty_field))
             ok = false
         }
         if (password.isEmpty()) {
-            etPassword.error = getString(R.string.error_empty_field)
+            FormUtils.showError(etPassword, getString(R.string.error_empty_field))
             ok = false
         }
         if (!ok) return
@@ -67,7 +72,12 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.isEnabled = false // чтобы не нажимали 10 раз
 
         lifecycleScope.launch {
-            val user = repository.login(login, password)
+            var user = repository.login(login, password)
+            if (user == null) {
+                // может аккаунт создали на другом телефоне и он ещё не скачался - обновляем и пробуем ещё раз
+                repository.syncFromCloud()
+                user = repository.login(login, password)
+            }
             btnLogin.isEnabled = true
             if (user == null) {
                 Toast.makeText(this@LoginActivity, R.string.error_wrong_login, Toast.LENGTH_SHORT).show()

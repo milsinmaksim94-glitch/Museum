@@ -9,13 +9,17 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_screen">
 
-        <ImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="@dimen/logo_size"
-            android:layout_height="@dimen/logo_size"
-            android:contentDescription="@string/nav_profile"
-            android:src="@drawable/ic_person"
-            app:tint="@color/primary"
+        <!-- шапка: кружок с инициалами, логин и роль -->
+        <TextView
+            android:id="@+id/tvAvatar"
+            android:layout_width="@dimen/avatar_profile"
+            android:layout_height="@dimen/avatar_profile"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@drawable/circle_avatar"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_header"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -25,125 +29,277 @@
             style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivAvatar" />
+            app:layout_constraintTop_toBottomOf="@id/tvAvatar" />
 
         <TextView
             android:id="@+id/tvRole"
-            style="@style/BodyText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_tiny"
+            android:background="@drawable/chip_background"
+            android:paddingStart="@dimen/margin_medium"
+            android:paddingTop="@dimen/margin_tiny"
+            android:paddingEnd="@dimen/margin_medium"
+            android:paddingBottom="@dimen/margin_tiny"
+            android:textColor="@color/on_accent"
+            android:textSize="@dimen/text_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvLogin" />
 
-        <!-- редактирование имени -->
-        <EditText
-            android:id="@+id/etName"
+        <!-- карточка "Личные данные" -->
+        <TextView
+            android:id="@+id/tvDataTitle"
+            style="@style/SectionTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
-            android:autofillHints="name"
-            android:hint="@string/hint_name"
-            android:inputType="textPersonName"
-            android:maxLines="1"
-            app:layout_constraintEnd_toStartOf="@id/btnSaveName"
+            android:text="@string/section_personal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvRole" />
 
-        <Button
-            android:id="@+id/btnSaveName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:text="@string/btn_save"
-            app:layout_constraintBottom_toBottomOf="@id/etName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/etName" />
-
-        <!-- смена пароля -->
-        <EditText
-            android:id="@+id/etNewPassword"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardData"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
-            android:autofillHints="password"
-            android:hint="@string/hint_new_password"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            app:layout_constraintEnd_toStartOf="@id/btnSavePassword"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etName" />
-
-        <Button
-            android:id="@+id/btnSavePassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:text="@string/btn_change"
-            app:layout_constraintBottom_toBottomOf="@id/etNewPassword"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/etNewPassword" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDataTitle">
 
-        <Button
-            android:id="@+id/btnFavorites"
-            style="@style/MainButton"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_screen">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_name"
+                    app:startIconDrawable="@drawable/ic_person">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="name"
+                        android:inputType="textPersonName|textCapWords"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSaveName"
+                    style="@style/MuseumButton.Outlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/btn_save_name" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:hint="@string/hint_new_password"
+                    app:endIconMode="password_toggle"
+                    app:startIconDrawable="@drawable/ic_lock">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNewPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="password"
+                        android:inputType="textPassword"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSavePassword"
+                    style="@style/MuseumButton.Outlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/btn_change_password" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- карточка-меню -->
+        <TextView
+            android:id="@+id/tvMenuTitle"
+            style="@style/SectionTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/title_favorites"
+            android:text="@string/section_museum"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etNewPassword" />
+            app:layout_constraintTop_toBottomOf="@id/cardData" />
 
-        <Button
-            android:id="@+id/btnMyBookings"
-            style="@style/MainButton"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
-            android:text="@string/title_my_bookings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnFavorites" />
+            app:layout_constraintTop_toBottomOf="@id/tvMenuTitle">
 
-        <!-- кнопка админки, по умолчанию скрыта -->
-        <Button
-            android:id="@+id/btnAdmin"
-            style="@style/MainButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:backgroundTint="@color/accent"
-            android:text="@string/title_admin"
-            android:textColor="@color/on_accent"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnMyBookings" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switchTheme"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/label_dark_theme"
-            android:textSize="@dimen/text_subtitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnAdmin" />
+                <LinearLayout
+                    android:id="@+id/btnFavorites"
+                    style="@style/MenuRow">
 
-        <Button
+                    <ImageView
+                        style="@style/MenuRowIcon"
+                        android:contentDescription="@string/title_favorites"
+                        android:src="@drawable/ic_favorite" />
+
+                    <TextView
+                        style="@style/MenuRowText"
+                        android:text="@string/title_favorites" />
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_small"
+                        android:layout_height="@dimen/icon_small"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/menu_divider_start"
+                    android:background="@color/divider" />
+
+                <LinearLayout
+                    android:id="@+id/btnMyBookings"
+                    style="@style/MenuRow">
+
+                    <ImageView
+                        style="@style/MenuRowIcon"
+                        android:contentDescription="@string/title_my_bookings"
+                        android:src="@drawable/ic_tour" />
+
+                    <TextView
+                        style="@style/MenuRowText"
+                        android:text="@string/title_my_bookings" />
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_small"
+                        android:layout_height="@dimen/icon_small"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/menu_divider_start"
+                    android:background="@color/divider" />
+
+                <LinearLayout
+                    android:id="@+id/btnAbout"
+                    style="@style/MenuRow">
+
+                    <ImageView
+                        style="@style/MenuRowIcon"
+                        android:contentDescription="@string/title_about"
+                        android:src="@drawable/ic_info" />
+
+                    <TextView
+                        style="@style/MenuRowText"
+                        android:text="@string/title_about" />
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_small"
+                        android:layout_height="@dimen/icon_small"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_chevron_right" />
+                </LinearLayout>
+
+                <!-- админка, по умолчанию скрыта (вместе с разделителем) -->
+                <LinearLayout
+                    android:id="@+id/adminBlock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/menu_divider_start"
+                        android:background="@color/divider" />
+
+                    <LinearLayout
+                        android:id="@+id/btnAdmin"
+                        style="@style/MenuRow">
+
+                        <ImageView
+                            style="@style/MenuRowIcon"
+                            android:contentDescription="@string/title_admin"
+                            android:src="@drawable/ic_settings" />
+
+                        <TextView
+                            style="@style/MenuRowText"
+                            android:text="@string/title_admin" />
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_small"
+                            android:layout_height="@dimen/icon_small"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_chevron_right" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/menu_divider_start"
+                    android:background="@color/divider" />
+
+                <!-- тёмная тема -->
+                <LinearLayout style="@style/MenuRow">
+
+                    <ImageView
+                        style="@style/MenuRowIcon"
+                        android:contentDescription="@string/label_dark_theme"
+                        android:src="@drawable/ic_dark_mode" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchTheme"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:layout_weight="1"
+                        android:text="@string/label_dark_theme"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_subtitle" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogout"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
+            style="@style/MuseumButton.Text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
             android:text="@string/btn_logout"
+            android:textColor="@color/status_cancelled"
+            app:icon="@drawable/ic_logout"
+            app:iconTint="@color/status_cancelled"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/switchTheme" />
+            app:layout_constraintTop_toBottomOf="@id/cardMenu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

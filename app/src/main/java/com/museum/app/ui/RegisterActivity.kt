@@ -12,6 +12,7 @@ import com.museum.app.R
 import com.museum.app.data.DBHelper
 import com.museum.app.data.MuseumRepository
 import com.museum.app.utils.SessionManager
+import com.museum.app.utils.FormUtils
 import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
@@ -51,31 +52,31 @@ class RegisterActivity : AppCompatActivity() {
         var ok = true
 
         if (name.isEmpty()) {
-            etName.error = getString(R.string.error_empty_field)
+            FormUtils.showError(etName, getString(R.string.error_empty_field))
             ok = false
         }
 
         if (login.isEmpty()) {
-            etLogin.error = getString(R.string.error_empty_field)
+            FormUtils.showError(etLogin, getString(R.string.error_empty_field))
             ok = false
         } else if (login.length < 3) {
-            etLogin.error = getString(R.string.error_login_short)
+            FormUtils.showError(etLogin, getString(R.string.error_login_short))
             ok = false
         } else if (login.contains(" ")) {
-            etLogin.error = getString(R.string.error_login_spaces)
+            FormUtils.showError(etLogin, getString(R.string.error_login_spaces))
             ok = false
         }
 
         if (password.isEmpty()) {
-            etPassword.error = getString(R.string.error_empty_field)
+            FormUtils.showError(etPassword, getString(R.string.error_empty_field))
             ok = false
         } else if (password.length < 6) {
-            etPassword.error = getString(R.string.error_password_short)
+            FormUtils.showError(etPassword, getString(R.string.error_password_short))
             ok = false
         }
 
         if (password2 != password) {
-            etPassword2.error = getString(R.string.error_password_mismatch)
+            FormUtils.showError(etPassword2, getString(R.string.error_password_mismatch))
             ok = false
         }
         return ok
@@ -90,11 +91,13 @@ class RegisterActivity : AppCompatActivity() {
 
         btnRegister.isEnabled = false
         lifecycleScope.launch {
+            // сначала обновляем данные из облака, чтобы проверить что логин не занят на другом телефоне
+            repository.syncFromCloud()
             val newId = repository.register(login, password, name)
             btnRegister.isEnabled = true
 
             if (newId == -1L) {
-                etLogin.error = getString(R.string.error_login_taken)
+                FormUtils.showError(etLogin, getString(R.string.error_login_taken))
             } else {
                 Toast.makeText(this@RegisterActivity, R.string.register_success, Toast.LENGTH_SHORT).show()
                 // сразу логиним нового пользователя

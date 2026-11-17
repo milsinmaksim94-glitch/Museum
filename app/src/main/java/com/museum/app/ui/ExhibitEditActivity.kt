@@ -5,14 +5,20 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.museum.app.R
 import com.museum.app.data.Hall
 import com.museum.app.data.MuseumRepository
+import com.museum.app.utils.ImageHelper
+import kotlinx.coroutines.Dispatchers
+import com.museum.app.utils.FormUtils
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 // Форма добавления и редактирования экспоната (для админа).
 // Если передан id - редактируем, если нет - добавляем новый
@@ -27,10 +33,30 @@ class ExhibitEditActivity : AppCompatActivity() {
     private lateinit var etTitle: EditText
     private lateinit var etAuthor: EditText
     private lateinit var etYear: EditText
+    private lateinit var etMaterial: EditText
+    private lateinit var etInvNumber: EditText
     private lateinit var etDescription: EditText
+    private lateinit var ivPhoto: ImageView
 
     private var halls: List<Hall> = emptyList()
     private var exhibitId: Long = -1
+    private var image = "" // текущее фото (res:... или base64)
+
+    // выбор картинки из галереи телефона
+    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) {
+            lifecycleScope.launch {
+                // сжатие картинки долгое, делаем в фоне
+                val result = withContext(Dispatchers.IO) { ImageHelper.uriToBase64(this@ExhibitEditActivity, uri) }
+                if (result == null) {
+                    Toast.makeText(this@ExhibitEditActivity, R.string.error_photo, Toast.LENGTH_SHORT).show()
+                } else {
+                    image = result
+                    ImageHelper.show(ivPhoto, image, R.drawable.ic_museum_large)
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,22 +70,31 @@ class ExhibitEditActivity : AppCompatActivity() {
         etTitle = findViewById(R.id.etTitle)
         etAuthor = findViewById(R.id.etAuthor)
         etYear = findViewById(R.id.etYear)
+        etMaterial = findViewById(R.id.etMaterial)
+        etInvNumber = findViewById(R.id.etInvNumber)
         etDescription = findViewById(R.id.etDescription)
+        ivPhoto = findViewById(R.id.ivPhoto)
 
         if (exhibitId == -1L) {
             setTitle(R.string.title_exhibit_add)
         }
 
+        findViewById<Button>(R.id.btnPhoto).setOnClickListener { pickImage.launch("image/*") }
         findViewById<Button>(R.id.btnSave).setOnClickListener { save() }
 
         // если экран пересоздан после поворота, поля уже заполнены - из базы не грузим
         val restoredHallPos = savedInstanceState?.getInt("hall_pos", -1) ?: -1
+        if (savedInstanceState != null) {
+            image = savedInstanceState.getString("image", "")
+            ImageHelper.show(ivPhoto, image, R.drawable.ic_museum_large)
+        }
         loadData(savedInstanceState == null, restoredHallPos)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("hall_pos", spinnerHall.selectedItemPosition)
+        outState.putString("image", image)
     }
 
     private fun loadData(firstStart: Boolean, restoredHallPos: Int) {
@@ -75,7 +110,7 @@ class ExhibitEditActivity : AppCompatActivity() {
 
             val names = ArrayList<String>()
             for (hall in halls) {
-                names.add(hall.name)
+                names.add(getString(R.string.format_hall_in_place, hall.name, hall.placeName))
             }
             val spinnerAdapter = ArrayAdapter(this@ExhibitEditActivity, android.R.layout.simple_spinner_item, names)
             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -94,7 +129,11 @@ class ExhibitEditActivity : AppCompatActivity() {
                     etTitle.setText(exhibit.title)
                     etAuthor.setText(exhibit.author)
                     etYear.setText(exhibit.year)
+                    etMaterial.setText(exhibit.material)
+                    etInvNumber.setText(exhibit.invNumber)
                     etDescription.setText(exhibit.description)
+                    image = exhibit.image
+                    ImageHelper.show(ivPhoto, image, R.drawable.ic_museum_large)
                     for (i in halls.indices) {
                         if (halls[i].id == exhibit.hallId) {
                             spinnerHall.setSelection(i)
@@ -108,18 +147,16 @@ class ExhibitEditActivity : AppCompatActivity() {
 
     private fun save() {
         val title = etTitle.text.toString().trim()
-        val author = etAuthor.text.toString().trim()
-        val year = etYear.text.toString().trim()
         val description = etDescription.text.toString().trim()
 
         // обязательные поля: название и описание
         var ok = true
         if (title.isEmpty()) {
-            etTitle.error = getString(R.string.error_empty_field)
+            FormUtils.showError(etTitle, getString(R.string.error_empty_field))
             ok = false
         }
         if (description.isEmpty()) {
-            etDescription.error = getString(R.string.error_empty_field)
+            FormUtils.showError(etDescription, getString(R.string.error_empty_field))
             ok = false
         }
         val pos = spinnerHall.selectedItemPosition
@@ -129,16 +166,18 @@ class ExhibitEditActivity : AppCompatActivity() {
         }
         if (!ok) return
 
-        val hallId = halls[pos].id
-
         lifecycleScope.launch {
-            if (exhibitId == -1L) {
-                repository.addExhibit(hallId, title, author, year, description)
-                Toast.makeText(this@ExhibitEditActivity, R.string.exhibit_added, Toast.LENGTH_SHORT).show()
-            } else {
-                repository.updateExhibit(exhibitId, hallId, title, author, year, description)
-                Toast.makeText(this@ExhibitEditActivity, R.string.exhibit_updated, Toast.LENGTH_SHORT).show()
-            }
+            repository.saveExhibit(
+                exhibitId, halls[pos].id, title,
+                etAuthor.text.toString().trim(),
+                etYear.text.toString().trim(),
+                description,
+                etInvNumber.text.toString().trim(),
+                etMaterial.text.toString().trim(),
+                image
+            )
+            val msg = if (exhibitId == -1L) R.string.exhibit_added else R.string.exhibit_updated
+            Toast.makeText(this@ExhibitEditActivity, msg, Toast.LENGTH_SHORT).show()
             finish() // экран закрывается, список обновится в onResume
         }
     }

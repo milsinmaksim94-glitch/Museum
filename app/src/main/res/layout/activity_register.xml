@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_screen">
+        android:padding="@dimen/margin_large">
 
         <TextView
             android:id="@+id/tvHeader"
@@ -16,88 +16,130 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/title_register"
+            android:text="@string/register_header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/etName"
+        <TextView
+            android:id="@+id/tvSubheader"
+            style="@style/BodyText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:autofillHints="name"
-            android:hint="@string/hint_name"
-            android:inputType="textPersonName"
-            android:maxLines="1"
+            android:layout_marginTop="@dimen/margin_tiny"
+            android:gravity="center"
+            android:text="@string/register_subtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvHeader"
             app:layout_constraintWidth_max="@dimen/form_max_width" />
 
-        <EditText
-            android:id="@+id/etLogin"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:autofillHints="username"
+            android:layout_marginTop="@dimen/margin_large"
+            android:hint="@string/hint_name"
+            app:startIconDrawable="@drawable/ic_person"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubheader"
+            app:layout_constraintWidth_max="@dimen/form_max_width">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="name"
+                android:inputType="textPersonName|textCapWords"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
             android:hint="@string/hint_login"
-            android:inputType="text"
-            android:maxLines="1"
+            app:helperText="@string/helper_login"
+            app:startIconDrawable="@drawable/ic_person"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etName"
-            app:layout_constraintWidth_max="@dimen/form_max_width" />
+            app:layout_constraintTop_toBottomOf="@id/tilName"
+            app:layout_constraintWidth_max="@dimen/form_max_width">
 
-        <EditText
-            android:id="@+id/etPassword"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="username"
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:autofillHints="password"
+            android:layout_marginTop="@dimen/margin_medium"
             android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:maxLines="1"
+            app:endIconMode="password_toggle"
+            app:helperText="@string/helper_password"
+            app:startIconDrawable="@drawable/ic_lock"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etLogin"
-            app:layout_constraintWidth_max="@dimen/form_max_width" />
+            app:layout_constraintTop_toBottomOf="@id/tilLogin"
+            app:layout_constraintWidth_max="@dimen/form_max_width">
 
-        <EditText
-            android:id="@+id/etPassword2"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="password"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPassword2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:autofillHints="password"
+            android:layout_marginTop="@dimen/margin_medium"
             android:hint="@string/hint_password_repeat"
-            android:inputType="textPassword"
-            android:maxLines="1"
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/ic_lock"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etPassword"
-            app:layout_constraintWidth_max="@dimen/form_max_width" />
+            app:layout_constraintTop_toBottomOf="@id/tilPassword"
+            app:layout_constraintWidth_max="@dimen/form_max_width">
 
-        <Button
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="password"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegister"
-            style="@style/MainButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
             android:text="@string/btn_register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etPassword2"
+            app:layout_constraintTop_toBottomOf="@id/tilPassword2"
             app:layout_constraintWidth_max="@dimen/form_max_width" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/tvGoLogin"
+            style="@style/MuseumButton.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:padding="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
             android:text="@string/link_login"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/text_subtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnRegister" />

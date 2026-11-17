@@ -15,10 +15,13 @@ class TourAdapter(
 ) : RecyclerView.Adapter<TourAdapter.TourViewHolder>() {
 
     class TourViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val tvFormat: TextView = view.findViewById(R.id.tvFormat)
         val tvTitle: TextView = view.findViewById(R.id.tvTitle)
         val tvPrice: TextView = view.findViewById(R.id.tvPrice)
         val tvDescription: TextView = view.findViewById(R.id.tvDescription)
+        val tvGuide: TextView = view.findViewById(R.id.tvGuide)
         val tvInfo: TextView = view.findViewById(R.id.tvInfo)
+        val tvSessions: TextView = view.findViewById(R.id.tvSessions)
         val btnBook: Button = view.findViewById(R.id.btnBook)
     }
 
@@ -31,10 +34,15 @@ class TourAdapter(
         val tour = items[position]
         val context = holder.itemView.context
 
+        holder.tvFormat.text = tour.format
         holder.tvTitle.text = tour.title
         holder.tvPrice.text = context.getString(R.string.format_price, tour.price)
         holder.tvDescription.text = tour.description
-        holder.tvInfo.text = context.getString(R.string.format_tour_info, tour.hallName, tour.duration)
+        holder.tvGuide.text = context.getString(R.string.format_guide, tour.guideName)
+        holder.tvInfo.text = context.getString(
+            R.string.format_tour_info, tour.placeName, tour.hallName, tour.duration, tour.maxPeople
+        )
+        holder.tvSessions.text = context.getString(R.string.format_sessions, tour.sessionList().joinToString(", "))
         holder.btnBook.setOnClickListener { onBookClick(tour) }
     }
 
